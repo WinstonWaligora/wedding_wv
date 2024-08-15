@@ -26,8 +26,10 @@ class MyApp extends StatelessWidget {
               decoration: BoxDecoration(
                 border: isWideScreen
                     ? const Border(
-                        left: BorderSide(color: appBarColor, width: borderWidth),
-                        right: BorderSide(color: appBarColor, width: borderWidth),
+                        left:
+                            BorderSide(color: appBarColor, width: borderWidth),
+                        right:
+                            BorderSide(color: appBarColor, width: borderWidth),
                       )
                     : null,
               ),

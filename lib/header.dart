@@ -34,7 +34,8 @@ class WeddingHeader extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * spacingFactor),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * spacingFactor),
             const Text(
               weddingDateLocation,
               style: TextStyle(

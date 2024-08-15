@@ -51,7 +51,8 @@ class RSVPFormState extends State<RSVPForm> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5, // Adjust the height as needed
+      height: MediaQuery.of(context).size.height *
+          0.5, // Adjust the height as needed
       child: ListView.builder(
         itemCount: _guests.length,
         itemBuilder: (context, index) {
@@ -59,8 +60,10 @@ class RSVPFormState extends State<RSVPForm> {
             guest: _guests[index],
             onNameChanged: (name) => _updateGuestName(index, name),
             onAgeChanged: (age) => _updateGuestAge(index, age),
-            onAccommodationsChanged: (accommodations) => _updateGuestAccommodations(index, accommodations),
+            onAccommodationsChanged: (accommodations) =>
+                _updateGuestAccommodations(index, accommodations),
             onRemove: () => _removeGuest(index),
+            canRemove: _guests.length > 1,
           );
         },
       ),

@@ -35,7 +35,9 @@ class WeddingDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * spacingFactor * 1.5),
+              SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height * spacingFactor * 1.5),
               const Text(
                 receptionInfo,
                 style: TextStyle(
@@ -51,7 +53,9 @@ class WeddingDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * spacingFactor * 1.5),
+              SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height * spacingFactor * 1.5),
               const RSVPForm(),
             ],
           ),

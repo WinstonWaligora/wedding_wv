@@ -16,13 +16,16 @@ class GuestDetails extends StatelessWidget {
   final ValueChanged<int?> onAgeChanged;
   final ValueChanged<String> onAccommodationsChanged;
   final VoidCallback onRemove;
+  final bool canRemove;
 
-  const GuestDetails({super.key, 
+  const GuestDetails({
+    super.key,
     required this.guest,
     required this.onNameChanged,
     required this.onAgeChanged,
     required this.onAccommodationsChanged,
     required this.onRemove,
+    required this.canRemove,
   });
 
   @override
@@ -86,14 +89,15 @@ class GuestDetails extends StatelessWidget {
             onChanged: onAccommodationsChanged,
           ),
           const SizedBox(height: buttonSpacing),
-          ElevatedButton(
-            onPressed: onRemove,
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.pinkAccent,
+          if (canRemove)
+            ElevatedButton(
+              onPressed: onRemove,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.pinkAccent,
+              ),
+              child: const Text('Remove'),
             ),
-            child: const Text('Remove'),
-          ),
         ],
       ),
     );
