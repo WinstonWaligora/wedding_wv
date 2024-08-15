@@ -19,7 +19,7 @@ class RSVPFormState extends State<RSVPForm>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
   }
@@ -34,6 +34,7 @@ class RSVPFormState extends State<RSVPForm>
     setState(() {
       _guests[index].name = name;
       _addNewGuestIfNeeded();
+      _removeEmptyGuestIfNeeded(index);
     });
   }
 
@@ -41,6 +42,7 @@ class RSVPFormState extends State<RSVPForm>
     setState(() {
       _guests[index].age = age;
       _addNewGuestIfNeeded();
+      _removeEmptyGuestIfNeeded(index);
     });
   }
 
@@ -48,6 +50,7 @@ class RSVPFormState extends State<RSVPForm>
     setState(() {
       _guests[index].accommodations = accommodations;
       _addNewGuestIfNeeded();
+      _removeEmptyGuestIfNeeded(index);
     });
   }
 
@@ -63,6 +66,15 @@ class RSVPFormState extends State<RSVPForm>
     }
   }
 
+  void _removeEmptyGuestIfNeeded(int index) {
+    if (index == _guests.length - 2 &&
+        _guests[index].name?.isEmpty == true &&
+        _guests[index].age == null &&
+        _guests[index].accommodations?.isEmpty == true) {
+      _guests.removeAt(index);
+    }
+  }
+
   void _removeGuest(int index) {
     setState(() {
       _guests.removeAt(index);
@@ -73,7 +85,7 @@ class RSVPFormState extends State<RSVPForm>
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 1000),
       curve: Curves.easeInOut,
       child: Column(
         children: List.generate(_guests.length, (index) {

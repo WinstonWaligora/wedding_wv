@@ -58,7 +58,7 @@ class WeddingDetails extends StatelessWidget {
               SizedBox(
                   height:
                       MediaQuery.of(context).size.height * spacingFactor * 1.5),
-              RSVPForm(),
+              const RSVPForm(),
             ],
           ),
         ),
