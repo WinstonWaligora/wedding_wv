@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
                       )
                     : null,
               ),
-              child: const SingleChildScrollView(
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    WeddingHeader(),
+                    const WeddingHeader(),
                     WeddingDetails(),
                   ],
                 ),

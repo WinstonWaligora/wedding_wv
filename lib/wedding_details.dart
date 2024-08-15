@@ -7,17 +7,19 @@ class WeddingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/floral_background.jpg'),
-          fit: BoxFit.cover,
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/floral_background.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(paddingValue),
-        child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(paddingValue),
           child: Column(
             children: [
               const Text(
@@ -56,7 +58,7 @@ class WeddingDetails extends StatelessWidget {
               SizedBox(
                   height:
                       MediaQuery.of(context).size.height * spacingFactor * 1.5),
-              const RSVPForm(),
+              RSVPForm(),
             ],
           ),
         ),

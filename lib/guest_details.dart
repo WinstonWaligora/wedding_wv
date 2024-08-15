@@ -10,7 +10,7 @@ class Guest {
   Guest({this.name, this.age, this.accommodations});
 }
 
-class GuestDetails extends StatelessWidget {
+class GuestDetails extends StatefulWidget {
   final Guest guest;
   final ValueChanged<String> onNameChanged;
   final ValueChanged<int?> onAgeChanged;
@@ -27,6 +27,32 @@ class GuestDetails extends StatelessWidget {
     required this.onRemove,
     required this.canRemove,
   });
+
+  @override
+  _GuestDetailsState createState() => _GuestDetailsState();
+}
+
+class _GuestDetailsState extends State<GuestDetails> {
+  late TextEditingController _nameController;
+  late TextEditingController _ageController;
+  late TextEditingController _accommodationsController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.guest.name);
+    _ageController = TextEditingController(text: widget.guest.age?.toString());
+    _accommodationsController =
+        TextEditingController(text: widget.guest.accommodations);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _ageController.dispose();
+    _accommodationsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +78,8 @@ class GuestDetails extends StatelessWidget {
               ),
             ),
             style: const TextStyle(color: Colors.white),
-            controller: TextEditingController(text: guest.name),
-            onChanged: onNameChanged,
+            controller: _nameController,
+            onChanged: widget.onNameChanged,
           ),
           const SizedBox(height: textFieldSpacing),
           TextField(
@@ -68,9 +94,9 @@ class GuestDetails extends StatelessWidget {
               ),
             ),
             style: const TextStyle(color: Colors.white),
-            controller: TextEditingController(text: guest.age?.toString()),
+            controller: _ageController,
             keyboardType: TextInputType.number,
-            onChanged: (value) => onAgeChanged(int.tryParse(value)),
+            onChanged: (value) => widget.onAgeChanged(int.tryParse(value)),
           ),
           const SizedBox(height: textFieldSpacing),
           TextField(
@@ -85,13 +111,13 @@ class GuestDetails extends StatelessWidget {
               ),
             ),
             style: const TextStyle(color: Colors.white),
-            controller: TextEditingController(text: guest.accommodations),
-            onChanged: onAccommodationsChanged,
+            controller: _accommodationsController,
+            onChanged: widget.onAccommodationsChanged,
           ),
           const SizedBox(height: buttonSpacing),
-          if (canRemove)
+          if (widget.canRemove)
             ElevatedButton(
-              onPressed: onRemove,
+              onPressed: widget.onRemove,
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.pinkAccent,
