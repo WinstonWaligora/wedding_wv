@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'details.dart';
+import 'constants.dart';
 import 'header.dart';
-import 'constants.dart'; // Import the constants file
+import 'wedding_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                       )
                     : null,
               ),
-              child: SingleChildScrollView(
+              child: const SingleChildScrollView(
                 child: Column(
                   children: [
                     WeddingHeader(),

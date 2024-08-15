@@ -1,3 +1,4 @@
+// constants.dart
 import 'package:flutter/material.dart';
 
 const String weddingTitle = 'Our Wedding';
@@ -10,3 +11,5 @@ const double borderWidth = 20.0;
 const double headerHeightFactor = 0.4;
 const double spacingFactor = 0.02;
 const double paddingValue = 16.0;
+const double textFieldSpacing = 8.0;
+const double buttonSpacing = 8.0;
