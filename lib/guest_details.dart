@@ -67,7 +67,11 @@ class _GuestDetailsState extends State<GuestDetails> {
           children: [
             Text(
               'Beloved Guest ${widget.guestNumber}', // Display guest number
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18, // Increase font size
+                fontWeight: FontWeight.bold, // Make text bold
+              ),
             ),
             if (widget.canRemove)
               ElevatedButton(

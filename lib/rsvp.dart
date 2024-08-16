@@ -67,16 +67,28 @@ class RSVPFormState extends State<RSVPForm> {
   }
 
   void _removeGuest(int index) {
-    setState(() {
-      _guests.removeAt(index);
-      _listKey.currentState?.removeItem(
-        index,
-        (context, animation) => SizeTransition(
-          sizeFactor: animation,
-          child: Container(),
+    final removedGuest = _guests.removeAt(index);
+    _listKey.currentState?.removeItem(
+      index,
+      (context, animation) => SizeTransition(
+        sizeFactor: animation,
+        child: GuestDetails(
+          key: ValueKey(removedGuest),
+          guest: removedGuest,
+          guestNumber: index + 1,
+          onNameChanged: (name) => _updateGuestName(index, name),
+          onAgeChanged: (age) => _updateGuestAge(index, age),
+          onAccommodationsChanged: (accommodations) =>
+              _updateGuestAccommodations(index, accommodations),
+          onRemove: () => _removeGuest(index),
+          canRemove: _guests.length > 1 &&
+              !(index == _guests.length - 1 &&
+                  _guests[index].name?.isEmpty == true &&
+                  _guests[index].age == null &&
+                  _guests[index].accommodations?.isEmpty == true),
         ),
-      );
-    });
+      ),
+    );
   }
 
   @override
