@@ -18,48 +18,56 @@ class WeddingDetails extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(paddingValue),
-          child: Column(
-            children: [
-              const Text(
-                ceremonyTime,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                      color: Colors.black54,
-                    ),
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(paddingValue),
+            child: Column(
+              children: [
+                const Text(
+                  ceremonyTime,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 2.0,
+                        color: Colors.black54,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
+                SizedBox(
                   height:
-                      MediaQuery.of(context).size.height * spacingFactor * 1.5),
-              const Text(
-                receptionInfo,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                      color: Colors.black54,
-                    ),
-                  ],
+                      MediaQuery.of(context).size.height * spacingFactor * 1.5,
                 ),
-              ),
-              SizedBox(
+                const Text(
+                  receptionInfo,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 2.0,
+                        color: Colors.black54,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
                   height:
-                      MediaQuery.of(context).size.height * spacingFactor * 1.5),
-              const RSVPForm(),
-            ],
+                      MediaQuery.of(context).size.height * spacingFactor * 1.5,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height *
+                      0.5, // Set a specific height
+                  child: const RSVPForm(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

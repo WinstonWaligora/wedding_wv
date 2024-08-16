@@ -8,27 +8,11 @@ class RSVPForm extends StatefulWidget {
   RSVPFormState createState() => RSVPFormState();
 }
 
-class RSVPFormState extends State<RSVPForm>
-    with SingleTickerProviderStateMixin {
+class RSVPFormState extends State<RSVPForm> {
   final List<Guest> _guests = [
     Guest(name: '', age: null, accommodations: ''),
   ];
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   void _updateGuestName(int index, String name) {
     setState(() {
@@ -62,7 +46,7 @@ class RSVPFormState extends State<RSVPForm>
 
     if (!hasEmptyGuest) {
       _guests.add(Guest(name: '', age: null, accommodations: ''));
-      _controller.forward(from: 0.0);
+      _listKey.currentState?.insertItem(_guests.length - 1);
     }
   }
 
@@ -72,38 +56,56 @@ class RSVPFormState extends State<RSVPForm>
         _guests[index].age == null &&
         _guests[index].accommodations?.isEmpty == true) {
       _guests.removeAt(index);
+      _listKey.currentState?.removeItem(
+        index,
+        (context, animation) => SizeTransition(
+          sizeFactor: animation,
+          child: Container(),
+        ),
+      );
     }
   }
 
   void _removeGuest(int index) {
     setState(() {
       _guests.removeAt(index);
-      _controller.forward(from: 0.0);
+      _listKey.currentState?.removeItem(
+        index,
+        (context, animation) => SizeTransition(
+          sizeFactor: animation,
+          child: Container(),
+        ),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSize(
-      duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeInOut,
-      child: Column(
-        children: List.generate(_guests.length, (index) {
-          return GuestDetails(
-            key: ValueKey(_guests[index]),
-            guest: _guests[index],
-            onNameChanged: (name) => _updateGuestName(index, name),
-            onAgeChanged: (age) => _updateGuestAge(index, age),
-            onAccommodationsChanged: (accommodations) =>
-                _updateGuestAccommodations(index, accommodations),
-            onRemove: () => _removeGuest(index),
-            canRemove: _guests.length > 1 &&
-                !(index == _guests.length - 1 &&
-                    _guests[index].name?.isEmpty == true &&
-                    _guests[index].age == null &&
-                    _guests[index].accommodations?.isEmpty == true),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5, // Set a specific height
+      child: AnimatedList(
+        key: _listKey,
+        initialItemCount: _guests.length,
+        itemBuilder: (context, index, animation) {
+          return SizeTransition(
+            sizeFactor: animation,
+            child: GuestDetails(
+              key: ValueKey(_guests[index]),
+              guest: _guests[index],
+              guestNumber: index + 1, // Pass the guest number
+              onNameChanged: (name) => _updateGuestName(index, name),
+              onAgeChanged: (age) => _updateGuestAge(index, age),
+              onAccommodationsChanged: (accommodations) =>
+                  _updateGuestAccommodations(index, accommodations),
+              onRemove: () => _removeGuest(index),
+              canRemove: _guests.length > 1 &&
+                  !(index == _guests.length - 1 &&
+                      _guests[index].name?.isEmpty == true &&
+                      _guests[index].age == null &&
+                      _guests[index].accommodations?.isEmpty == true),
+            ),
           );
-        }),
+        },
       ),
     );
   }
