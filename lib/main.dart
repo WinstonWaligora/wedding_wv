@@ -13,6 +13,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: appBarColor,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.pinkAccent,
+        ),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.white,
+            fontSize:
+                MediaQuery.of(context).size.width * 0.05, // Relative font size
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
+        dividerColor: Colors.white,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text(weddingTitle),
@@ -33,10 +48,10 @@ class MyApp extends StatelessWidget {
                       )
                     : null,
               ),
-              child: SingleChildScrollView(
+              child: const SingleChildScrollView(
                 child: Column(
                   children: [
-                    const WeddingHeader(),
+                    WeddingHeader(),
                     WeddingDetails(),
                   ],
                 ),

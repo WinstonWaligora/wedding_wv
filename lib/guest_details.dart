@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'constants.dart';
+import 'package:flutter/services.dart';
 
 class Guest {
   String? name;
@@ -12,7 +11,7 @@ class Guest {
 
 class GuestDetails extends StatefulWidget {
   final Guest guest;
-  final int guestNumber; // Add guest number
+  final int guestNumber;
   final ValueChanged<String> onNameChanged;
   final ValueChanged<int?> onAgeChanged;
   final ValueChanged<String> onAccommodationsChanged;
@@ -22,7 +21,7 @@ class GuestDetails extends StatefulWidget {
   const GuestDetails({
     super.key,
     required this.guest,
-    required this.guestNumber, // Add guest number
+    required this.guestNumber,
     required this.onNameChanged,
     required this.onAgeChanged,
     required this.onAccommodationsChanged,
@@ -58,33 +57,41 @@ class _GuestDetailsState extends State<GuestDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.bodyMedium;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(color: Colors.white),
+        Divider(color: theme.dividerColor),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Beloved Guest ${widget.guestNumber}', // Display guest number
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18, // Increase font size
-                fontWeight: FontWeight.bold, // Make text bold
-              ),
+              'Beloved Guest ${widget.guestNumber}',
+              style: textStyle,
             ),
             if (widget.canRemove)
-              ElevatedButton(
-                onPressed: widget.onRemove,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.pinkAccent,
+              SizedBox(
+                height: textStyle!.fontSize! * 1.2,
+                width: screenWidth * 0.2, // Set relative width
+                child: ElevatedButton(
+                  onPressed: widget.onRemove,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: theme.colorScheme.secondary,
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: Text('Remove',
+                      style: TextStyle(
+                          fontSize: textStyle!.fontSize! * 0.7,
+                          fontWeight: FontWeight.normal)),
                 ),
-                child: const Text('Remove'),
               ),
           ],
         ),
-        const SizedBox(height: textFieldSpacing),
+        const SizedBox(height: 8.0),
         TextField(
           decoration: const InputDecoration(
             labelText: 'Name',
@@ -100,7 +107,7 @@ class _GuestDetailsState extends State<GuestDetails> {
           controller: _nameController,
           onChanged: widget.onNameChanged,
         ),
-        const SizedBox(height: textFieldSpacing),
+        const SizedBox(height: 8.0),
         TextField(
           decoration: const InputDecoration(
             labelText: 'Age',
@@ -112,12 +119,15 @@ class _GuestDetailsState extends State<GuestDetails> {
               borderSide: BorderSide(color: Colors.white),
             ),
           ),
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
           style: const TextStyle(color: Colors.white),
           controller: _ageController,
           keyboardType: TextInputType.number,
           onChanged: (value) => widget.onAgeChanged(int.tryParse(value)),
         ),
-        const SizedBox(height: textFieldSpacing),
+        const SizedBox(height: 8.0),
         TextField(
           decoration: const InputDecoration(
             labelText: 'Accommodations',
@@ -133,7 +143,7 @@ class _GuestDetailsState extends State<GuestDetails> {
           controller: _accommodationsController,
           onChanged: widget.onAccommodationsChanged,
         ),
-        const Divider(color: Colors.white),
+        Divider(color: theme.dividerColor),
       ],
     );
   }

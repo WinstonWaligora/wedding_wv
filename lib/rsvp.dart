@@ -17,24 +17,24 @@ class RSVPFormState extends State<RSVPForm> {
   void _updateGuestName(int index, String name) {
     setState(() {
       _guests[index].name = name;
-      _addNewGuestIfNeeded();
       _removeEmptyGuestIfNeeded(index);
+      _addNewGuestIfNeeded();
     });
   }
 
   void _updateGuestAge(int index, int? age) {
     setState(() {
       _guests[index].age = age;
-      _addNewGuestIfNeeded();
       _removeEmptyGuestIfNeeded(index);
+      _addNewGuestIfNeeded();
     });
   }
 
   void _updateGuestAccommodations(int index, String accommodations) {
     setState(() {
       _guests[index].accommodations = accommodations;
-      _addNewGuestIfNeeded();
       _removeEmptyGuestIfNeeded(index);
+      _addNewGuestIfNeeded();
     });
   }
 
@@ -51,16 +51,30 @@ class RSVPFormState extends State<RSVPForm> {
   }
 
   void _removeEmptyGuestIfNeeded(int index) {
-    if (index == _guests.length - 2 &&
+    if (_guests.length > 1 &&
         _guests[index].name?.isEmpty == true &&
         _guests[index].age == null &&
         _guests[index].accommodations?.isEmpty == true) {
-      _guests.removeAt(index);
+      final removedGuest = _guests.removeAt(index);
       _listKey.currentState?.removeItem(
         index,
         (context, animation) => SizeTransition(
           sizeFactor: animation,
-          child: Container(),
+          child: GuestDetails(
+            key: ValueKey(removedGuest),
+            guest: removedGuest,
+            guestNumber: index + 1,
+            onNameChanged: (name) => _updateGuestName(index, name),
+            onAgeChanged: (age) => _updateGuestAge(index, age),
+            onAccommodationsChanged: (accommodations) =>
+                _updateGuestAccommodations(index, accommodations),
+            onRemove: () => _removeGuest(index),
+            canRemove: _guests.length > 1 &&
+                !(index == _guests.length - 1 &&
+                    _guests[index].name?.isEmpty == true &&
+                    _guests[index].age == null &&
+                    _guests[index].accommodations?.isEmpty == true),
+          ),
         ),
       );
     }
